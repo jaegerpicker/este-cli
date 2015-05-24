@@ -18,6 +18,7 @@
     "mustache": "^2.0.0",
     "param-case": "^1.1.1",
     "pascal-case": "^1.1.1",
+    "path-case": "^1.1.1",
     "require-directory": "^2.1.0",
     "rimraf": "^2.3.4"
   },
