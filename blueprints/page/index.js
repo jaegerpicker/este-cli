@@ -5,7 +5,19 @@
 
 'use strict';
 
+var paramName = require('param-case');
+var camelCase = require('camel-case');
+
 module.exports = {
   name: 'Page generator',
-  description: 'Generates new page'
+  description: 'Generates new page',
+  afterInstall: function() {
+    return gulp.src('./')
+  },
+  mapTemplateVariables: function(options) {
+    return {
+      cssName: paramName(options.blueprintName),
+      objectName: camelCase(options.blueprintName)
+    }
+  }
 };

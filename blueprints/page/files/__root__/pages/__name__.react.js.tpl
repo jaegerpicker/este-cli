@@ -7,8 +7,8 @@ export default class {{className}} extends Component {
 
   render() {
     return (
-      <DocumentTitle title={msg('home.title')}>
-        <div className="home-page">
+      <DocumentTitle title={msg('{{objectName}}.title')}>
+        <div className="{{cssName}}-page">
           <p>Hello world</p>
         </div>
       </DocumentTitle>
