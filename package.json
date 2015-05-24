@@ -1,0 +1,20 @@
+{
+  "name": "este-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Mike Grabowski <grabbou@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "chalk": "^1.0.0",
+    "child-process-promise": "^1.1.0",
+    "commander": "^2.8.1",
+    "mkdirp": "^0.5.1",
+    "require-directory": "^2.1.0",
+    "rimraf": "^2.3.4"
+  },
+  "bin": {
+    "este-cli": "./bin/cli"
+  }
+}
