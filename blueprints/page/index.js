@@ -14,7 +14,7 @@ module.exports = {
   afterInstall: function() {
     return gulp.src('./')
   },
-  mapTemplateVariables: function(options) {
+  mapTemplateVariables: function(file, options) {
     return {
       cssName: paramName(options.blueprintName),
       objectName: camelCase(options.blueprintName)
