@@ -4,3 +4,8 @@
  */
 
 'use strict';
+
+module.exports = {
+  name: 'Page generator',
+  description: 'Generates new page'
+};
