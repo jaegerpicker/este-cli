@@ -1,4 +1,4 @@
-import Component from './component.react';
+import Component from '{{{rootPath}}}/component.react';
 import React from 'react';
 
 export default function {{camelName}}(WrappedComponent) {
