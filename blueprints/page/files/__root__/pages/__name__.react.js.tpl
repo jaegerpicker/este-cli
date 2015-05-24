@@ -1,1 +1,3 @@
-{{blueprintName}}
+class {{className}} extends Component {
+
+}

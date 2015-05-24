@@ -14,6 +14,7 @@
     "gulp-tap": "^0.1.3",
     "mkdirp": "^0.5.1",
     "mu2": "^0.5.20",
+    "pascal-case": "^1.1.1",
     "require-directory": "^2.1.0",
     "rimraf": "^2.3.4"
   },
