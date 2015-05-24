@@ -6,7 +6,11 @@
 'use strict';
 
 var camelCase = require('camel-case');
+var Promise = require('bluebird');
 
 module.exports = {
-  description: 'Generates new store'
+  description: 'Generates new store',
+  afterInstall: function(options) {
+    return Promise.resolve();
+  }
 };
