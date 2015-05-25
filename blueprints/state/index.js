@@ -5,14 +5,12 @@
 
 'use strict';
 
+var camelCase = require('camel-case');
 var recast = require('recast');
+var b = recast.types.builders;
 var Promise = require('bluebird');
 var path = require('path');
 var fs = require('fs');
-
-var getCursors = require('./helpers/get-states');
-var buildNode = require('./helpers/state-node');
-var hasCursor = require('./helpers/has-state');
 
 module.exports = {
 
@@ -21,22 +19,53 @@ module.exports = {
   afterInstall: function(options) {
     var statePath = path.join(options.serverFolder, 'initialstate.js');
     var data = recast.parse(fs.readFileSync(statePath).toString());
-    var cursors = getCursors(data);
+    var blueprintName = camelCase(options.blueprintName);
 
-    if (!cursors) {
-      return Promise.reject('Invalid initialstate.js file');
-    }
+    var states = null;
 
-    var node = buildNode({
-      name: options.blueprintName
+    // Get states by assuming they are exported from initialstate.js file
+    recast.visit(data.program.body, {
+      visitExportDeclaration: function(data) {
+        states = data;
+        return false;
+      }
     });
 
-    // Do nothing if already there
-    if (hasCursor(cursors, node)) {
-      return Promise.resolve();
-    } else {
-      cursors.value.declaration.properties.push(node);
+    if (!states) {
+      return Promise.reject('No export declaration in initialstate.js. Please check your file');
     }
+
+    var containsStateAlready = false;
+
+    recast.visit(states, {
+
+      // Traverse every expression statement
+      visitObjectExpression: function(object) {
+        this.traverse(object);
+        if (!containsStateAlready) {
+          var stateProperty = b.property(
+            'init',
+            b.identifier(blueprintName),
+            b.objectExpression([])
+          );
+          object.get('properties').push(stateProperty);
+        }
+      },
+
+      // Go deeper on every property to get identifier
+      visitProperty: function(property) {
+        this.traverse(property);
+      },
+
+      // Compare identifiers with a new name to ensure it's unique
+      visitIdentifier: function(identifier) {
+        if (identifier.get('name').value === blueprintName) {
+          containsStateAlready = true;
+          this.abort();
+        }
+        return false;
+      }
+    });
 
     return new Promise.fromNode(function(callback) {
       var modifiedElement = recast.print(data).code;
