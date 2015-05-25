@@ -12,9 +12,21 @@ var fs = require('fs');
 var _ = require('lodash');
 
 module.exports = {
+
   skipExistingFiles: true,
+
+  arguments: [{
+    type: String,
+    name: 'blueprintAction'
+  }],
+
   description: 'Generates new action',
+
   afterInstall: function(options) {
+
+    // Generator was run with 3 arguments instead of 3, skip afterInstall
+    if (!options.blueprintAction) return;
+
     var actionPath = path.join(options.rootFolder, options.blueprintName, 'actions.js');
     var data = recast.parse(fs.readFileSync(actionPath).toString());
 
@@ -91,7 +103,9 @@ module.exports = {
       }
     });
 
-    console.log(recast.print(setToString).code);
-
+    return new Promise.fromNode(function(callback) {
+      var modifiedElement = recast.print(data).code;
+      fs.writeFile(actionPath, modifiedElement, callback);
+    });
   }
 };
