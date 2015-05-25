@@ -14,6 +14,14 @@ Following variables are set by default and are planned to be supported by `.este
 - `__root__` - defaults to `src/client`
 - `__server__` - defaults to `src/server`
 
+### page
+```bash
+$ este-cli g page todos
+```
+Will create a page in `__root__/pages/todos.react.js`. If name is nested, the folders will respect it as well. 
+
+Currently, it won't update `routes.js` file although this feature is planned.
+
 ### store
 ```bash
 $ este-cli g store todos
