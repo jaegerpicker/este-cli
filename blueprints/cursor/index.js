@@ -27,7 +27,7 @@ module.exports = {
     // Get all elements in a program
     recast.visit(data, {
       visitProgram: function(program) {
-        elements = program.get('elements');
+        elements = program.get('body');
         state = program.scope.getBindings().state;
         return false;
       }
@@ -43,21 +43,11 @@ module.exports = {
 
     var containsCursorAlready = false;
 
-    recast.visit(data.program.body, {
+    recast.visit(elements, {
 
       // Visit all export declarations to check against duplicates
       visitExportDeclaration: function(exportDeclaration) {
         this.traverse(exportDeclaration);
-        if (containsCursorAlready) {
-          var cursor = b.exportDeclaration(
-            b.variableDeclaration(
-              b.variableDeclarator(
-
-              )
-            )
-          );
-          elements.push(cursor);
-        }
       },
 
       // Check all export const declarations
@@ -79,10 +69,34 @@ module.exports = {
 
     });
 
-    //return new Promise.fromNode(function(callback) {
-    //  var modifiedElement = recast.print(data).code;
-    //  fs.writeFile(statePath, modifiedElement, callback);
-    //});
+    // Add cursor if not yet present
+    if (!containsCursorAlready) {
+      var cursor = b.exportDeclaration(
+        false,
+        b.variableDeclaration(
+          'const',
+          [b.variableDeclarator(
+            b.identifier(blueprintName),
+            b.callExpression(
+              b.memberExpression(
+                b.identifier('state'),
+                b.identifier('cursor'),
+                false
+              ),
+              [b.arrayExpression([
+                b.literal(blueprintName)
+              ])]
+            )
+          )]
+        )
+      );
+      elements.push(cursor);
+    }
+
+    return new Promise.fromNode(function(callback) {
+      var modifiedElement = recast.print(data).code;
+      fs.writeFile(statePath, modifiedElement, callback);
+    });
 
   }
 };
