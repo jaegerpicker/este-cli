@@ -40,8 +40,13 @@ module.exports = {
 
     actionProperty.shorthand = true;
 
-    setToString.value.expression.arguments[1].properties.push(actionProperty);
-
+    recast.visit(setToString, {
+      visitObjectExpression: function(data) {
+        data.get('properties').push(actionProperty);
+        return false;
+      }
+    });
+    
     console.log(recast.print(setToString).code);
 
   }
