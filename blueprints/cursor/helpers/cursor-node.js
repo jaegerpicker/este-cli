@@ -10,7 +10,7 @@ var builders = require('recast').types.builders;
 module.exports = function buildNode(options) {
   return builders.property(
     'init',
-    builders.identifier(options.blueprintName),
+    builders.identifier(options.name),
     builders.objectExpression([])
   );
 };

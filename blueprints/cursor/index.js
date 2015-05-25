@@ -25,7 +25,9 @@ module.exports = {
       return Promise.reject('Invalid initialstate.js file');
     }
 
-    var node = buildNode(options);
+    var node = buildNode({
+      name: options.blueprintName
+    });
 
     // Do nothing if already there
     if (hasCursor(cursors, node)) {
