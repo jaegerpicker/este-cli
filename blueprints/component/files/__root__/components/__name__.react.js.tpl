@@ -1,7 +1,7 @@
 import Component from '{{{rootPath}}}/component.react';
 import React from 'react';
 
-export default function {{camelName}}(BaseComponent) {
+export default function {{camelName}}Component(BaseComponent) {
 
   class {{className}} extends Component {
     render() {

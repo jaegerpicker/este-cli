@@ -12,8 +12,7 @@ module.exports = {
   description: 'Generates new page',
   locals: function(file, options) {
     return {
-      cssName: paramName(options.blueprintName),
-      objectName: camelCase(options.blueprintName)
+      cssName: paramName(options.blueprintName)
     }
   }
 };
