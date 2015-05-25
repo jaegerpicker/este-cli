@@ -5,6 +5,7 @@
 
 'use strict';
 
+var Promise = require('bluebird');
 var recast = require('recast');
 var b = recast.types.builders;
 var path = require('path');
@@ -15,9 +16,10 @@ module.exports = {
 
   skipExistingFiles: true,
 
-  arguments: [{
+  args: [{
     type: String,
-    name: 'blueprintAction'
+    name: 'action',
+    property: 'blueprintAction'
   }],
 
   description: 'Generates new action',
