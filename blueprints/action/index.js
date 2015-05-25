@@ -12,7 +12,6 @@ var fs = require('fs');
 var _ = require('lodash');
 
 var getAction = require('./helpers/get-action');
-var getNode = require('./helpers/action-node');
 
 module.exports = {
   skipExistingFiles: true,
@@ -26,17 +25,27 @@ module.exports = {
       return Promise.reject('Couldn\'t find `setToString` method. Make sure it exists');
     }
 
-    var node = getNode({
-      name: options.blueprintName
-    });
+    var node = b.exportDeclaration(
+      false,
+      b.functionDeclaration(
+        b.identifier(options.blueprintName),
+        [],
+        b.blockStatement([])
+      )
+    );
 
     setToString.insertBefore(node);
 
+    // Check if action is already defined in setToString
     var containsActionAlready = false;
 
     recast.visit(setToString, {
+
+      // Go deeper in object expression (our root)
       visitObjectExpression: function(object) {
         this.traverse(object);
+
+        // After done with traversing, check the flag and append the item
         if (!containsActionAlready) {
           var actionProperty = b.property(
             'init',
@@ -47,9 +56,13 @@ module.exports = {
           object.get('properties').push(actionProperty);
         }
       },
+
+      // Go deeper on every property to get identifier
       visitProperty: function(property) {
         this.traverse(property);
       },
+
+      // Compare identifiers with a new name to ensure it's unique
       visitIdentifier: function(identifier) {
         if (identifier.get('name').value === options.blueprintName) {
           containsActionAlready = true;
