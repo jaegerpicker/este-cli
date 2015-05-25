@@ -1,15 +1,15 @@
 import Component from '{{{rootPath}}}/component.react';
 import React from 'react';
 
-export default function {{camelName}}(WrappedComponent) {
+export default function {{camelName}}(BaseComponent) {
 
   class {{className}} extends Component {
     render() {
-      return <WrappedComponent {...this.props} />;
+      return <BaseComponent {...this.props} />;
     }
   }
 
-  {{className}}.displayName = `${WrappedComponent.name}{{className}}`;
+  {{className}}.displayName = `${BaseComponent.name}{{className}}`;
 
   return {{className}};
 
