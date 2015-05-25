@@ -16,7 +16,7 @@ var hasCursor = require('./helpers/has-cursor');
 
 module.exports = {
 
-  installBlueprint: function(options) {
+  afterInstall: function(options) {
     var statePath = path.join(options.serverFolder, 'initialstate.js');
     var data = recast.parse(fs.readFileSync(statePath).toString());
     var cursors = getCursors(data);
