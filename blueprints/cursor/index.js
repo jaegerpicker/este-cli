@@ -10,9 +10,9 @@ var Promise = require('bluebird');
 var path = require('path');
 var fs = require('fs');
 
-var getCursors = require('./helpers/get-states');
+var getStates = require('./helpers/get-states');
 var buildNode = require('./helpers/state-node');
-var hasCursor = require('./helpers/has-state');
+var hasState = require('./helpers/has-state');
 
 module.exports = {
 
@@ -21,9 +21,9 @@ module.exports = {
   afterInstall: function(options) {
     var statePath = path.join(options.serverFolder, 'initialstate.js');
     var data = recast.parse(fs.readFileSync(statePath).toString());
-    var cursors = getCursors(data);
+    var states = getStates(data);
 
-    if (!cursors) {
+    if (!states) {
       return Promise.reject('Invalid initialstate.js file');
     }
 
@@ -32,10 +32,10 @@ module.exports = {
     });
 
     // Do nothing if already there
-    if (hasCursor(cursors, node)) {
+    if (hasStates(states, node)) {
       return Promise.resolve();
     } else {
-      cursors.value.declaration.properties.push(node);
+      states.value.declaration.properties.push(node);
     }
 
     return new Promise.fromNode(function(callback) {
