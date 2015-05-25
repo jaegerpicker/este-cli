@@ -1,6 +1,6 @@
 {{=<% %>=}}
 import {register} from '<% &rootPath %>/dispatcher';
-import {<% camelName %>} from '<% &rootPath %>/state';
+import {<% camelName %>}Cursor from '<% &rootPath %>/state';
 
 export const dispatchToken = register(({action, data}) => {
 
