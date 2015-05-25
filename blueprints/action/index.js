@@ -32,21 +32,33 @@ module.exports = {
 
     setToString.insertBefore(node);
 
-    var actionProperty = b.property(
-      'init',
-      b.identifier(options.blueprintName),
-      b.identifier(options.blueprintName)
-    );
-
-    actionProperty.shorthand = true;
+    var containsActionAlready = false;
 
     recast.visit(setToString, {
-      visitObjectExpression: function(data) {
-        data.get('properties').push(actionProperty);
+      visitObjectExpression: function(object) {
+        this.traverse(object);
+        if (!containsActionAlready) {
+          var actionProperty = b.property(
+            'init',
+            b.identifier(options.blueprintName),
+            b.identifier(options.blueprintName)
+          );
+          actionProperty.shorthand = true;
+          object.get('properties').push(actionProperty);
+        }
+      },
+      visitProperty: function(property) {
+        this.traverse(property);
+      },
+      visitIdentifier: function(identifier) {
+        if (identifier.get('name').value === options.blueprintName) {
+          containsActionAlready = true;
+          this.abort();
+        }
         return false;
       }
     });
-    
+
     console.log(recast.print(setToString).code);
 
   }
