@@ -11,20 +11,39 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('lodash');
 
-var getAction = require('./helpers/get-action');
-
 module.exports = {
   skipExistingFiles: true,
   description: 'Generates new action',
   afterInstall: function(options) {
     var actionPath = path.join(options.rootFolder, options.blueprintName, 'actions.js');
     var data = recast.parse(fs.readFileSync(actionPath).toString());
-    var setToString = getAction(data);
+
+    // Assume setToString does not exist yet
+    var setToString = null;
+
+    recast.visit(data.program.body, {
+
+      // Traverse every expression statement
+      visitExpressionStatement: function(statement) {
+        this.traverse(statement);
+      },
+
+      // Check if setToString is a callee name in call expression
+      visitCallExpression: function(call) {
+        if (call.get('callee').value.name === 'setToString') {
+          setToString = call.parent;
+          this.abort();
+        }
+        return false;
+      }
+    });
+
 
     if (!setToString) {
       return Promise.reject('Couldn\'t find `setToString` method. Make sure it exists');
     }
 
+    // Add new export action just before setToString
     var node = b.exportDeclaration(
       false,
       b.functionDeclaration(
