@@ -14,8 +14,10 @@ var _ = require('lodash');
 
 module.exports = {
 
+  // This blueprint only ensures actions file exists, so skip by default
   skipExistingFiles: true,
 
+  // Additional optional argument
   args: [{
     type: String,
     name: 'action',
