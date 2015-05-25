@@ -6,36 +6,37 @@
 'use strict';
 
 var recast = require('recast');
-var builders = recast.types.builders;
 var Promise = require('bluebird');
 var path = require('path');
 var fs = require('fs');
 
+var getCursors = require('./helpers/get-cursors');
+var buildNode = require('./helpers/cursor-node');
+var hasCursor = require('./helpers/has-cursor');
+
 module.exports = {
+
   installBlueprint: function(options) {
     var statePath = path.join(options.serverFolder, 'initialstate.js');
     var data = recast.parse(fs.readFileSync(statePath).toString());
-    var exportNode = null;
-    recast.visit(data.program.body, {
-      visitExportDeclaration: function(data) {
-        exportNode = data;
-        return false;
-      }
-    });
-    if (exportNode) {
-      var node = builders.property(
-        'init',
-        builders.identifier(options.blueprintName),
-        builders.objectExpression([])
-      );
-      exportNode.value.declaration.properties.push(node);
-      var modifiedElement = recast.print(data).code;
-      fs.writeFileSync(statePath, modifiedElement);
+    var cursors = getCursors(data);
+
+    if (!cursors) {
+      return Promise.reject('Invalid initialstate.js file');
     }
-    return new Promise(function(resolve) {
-      setTimeout(function() {
-        resolve();
-      }, 1000);
+
+    var node = buildNode(options);
+
+    // Do nothing if already there
+    if (hasCursor(cursors, node)) {
+      return Promise.resolve();
+    } else {
+      cursors.value.declaration.properties.push(node);
+    }
+
+    return new Promise.fromNode(function(callback) {
+      var modifiedElement = recast.print(data).code;
+      fs.writeFile(statePath, modifiedElement, callback);
     });
 
   }
