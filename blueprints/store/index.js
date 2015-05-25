@@ -11,7 +11,7 @@ var Blueprint = require('../../lib/models/blueprint');
 
 module.exports = {
   description: 'Generates new store',
-  mapTemplateVariables: function(file, options) {
+  locals: function(file, options) {
     return {
       camelName: camelCase(options.blueprintName)
     }

@@ -9,7 +9,7 @@ var camelCase = require('camel-case');
 
 module.exports = {
   description: 'Generates new component',
-  mapTemplateVariables: function(file, options) {
+  locals: function(file, options) {
     return {
       camelName: camelCase(options.blueprintName)
     }

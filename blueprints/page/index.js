@@ -11,7 +11,7 @@ var camelCase = require('camel-case');
 
 module.exports = {
   description: 'Generates new page',
-  mapTemplateVariables: function(file, options) {
+  locals: function(file, options) {
     return {
       cssName: paramName(options.blueprintName),
       objectName: camelCase(options.blueprintName)
