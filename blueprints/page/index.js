@@ -5,7 +5,6 @@
 
 'use strict';
 
-var path = require('path');
 var paramName = require('param-case');
 var camelCase = require('camel-case');
 
