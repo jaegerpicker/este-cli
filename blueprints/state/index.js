@@ -7,6 +7,7 @@
 
 var camelCase = require('camel-case');
 var recast = require('recast');
+var n = recast.types.namedTypes;
 var b = recast.types.builders;
 var Promise = require('bluebird');
 var path = require('path');
@@ -39,17 +40,21 @@ module.exports = {
 
     recast.visit(states, {
 
-      // Traverse every expression statement
+      // Traverse only top-level expression statement
       visitObjectExpression: function(object) {
-        this.traverse(object);
-        if (!containsStateAlready) {
-          var stateProperty = b.property(
-            'init',
-            b.identifier(blueprintName),
-            b.objectExpression([])
-          );
-          object.get('properties').push(stateProperty);
+        if(n.ExportDeclaration.check(object.parent.node)) {
+          this.traverse(object);
+
+          if (!containsStateAlready) {
+            var stateProperty = b.property(
+              'init',
+              b.identifier(blueprintName),
+              b.objectExpression([])
+            );
+            object.get('properties').push(stateProperty);
+          }
         }
+        return false;
       },
 
       // Go deeper on every property to get identifier
