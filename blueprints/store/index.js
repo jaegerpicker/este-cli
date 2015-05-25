@@ -17,6 +17,9 @@ module.exports = {
     }
   },
   afterInstall: function(options) {
-    return Blueprint.load('cursor').install(options);
+    return Promise.all([
+      Blueprint.load('state').install(options),
+      Blueprint.load('cursor').install(options)
+    ]);
   }
 };
