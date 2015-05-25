@@ -1,4 +1,4 @@
-import Component from '{{{rootPath}}}/component.react';
+import Component from '{{{folderPath}}}/component.react';
 import React from 'react';
 
 export default function {{camelName}}Component(BaseComponent) {
