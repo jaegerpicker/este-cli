@@ -48,6 +48,16 @@ module.exports = {
       // Visit all export declarations to check against duplicates
       visitExportDeclaration: function(exportDeclaration) {
         this.traverse(exportDeclaration);
+        if (containsCursorAlready) {
+          var cursor = b.exportDeclaration(
+            b.variableDeclaration(
+              b.variableDeclarator(
+
+              )
+            )
+          );
+          elements.push(cursor);
+        }
       },
 
       // Check all export const declarations
@@ -69,45 +79,6 @@ module.exports = {
 
     });
 
-    console.log(containsCursorAlready);
-
-    if (containsCursorAlready) {
-
-    }
-
-    //
-    //
-    //
-    //recast.visit(states, {
-    //
-    //  // Traverse every expression statement
-    //  visitObjectExpression: function(object) {
-    //    this.traverse(object);
-    //    if (!containsStateAlready) {
-    //      var stateProperty = b.property(
-    //        'init',
-    //        b.identifier(blueprintName),
-    //        b.objectExpression([])
-    //      );
-    //      object.get('properties').push(stateProperty);
-    //    }
-    //  },
-    //
-    //  // Go deeper on every property to get identifier
-    //  visitProperty: function(property) {
-    //    this.traverse(property);
-    //  },
-    //
-    //  // Compare identifiers with a new name to ensure it's unique
-    //  visitIdentifier: function(identifier) {
-    //    if (identifier.get('name').value === blueprintName) {
-    //      containsStateAlready = true;
-    //      this.abort();
-    //    }
-    //    return false;
-    //  }
-    //});
-    //
     //return new Promise.fromNode(function(callback) {
     //  var modifiedElement = recast.print(data).code;
     //  fs.writeFile(statePath, modifiedElement, callback);
