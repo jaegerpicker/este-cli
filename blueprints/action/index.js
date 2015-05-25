@@ -61,7 +61,7 @@ module.exports = {
     var node = b.exportDeclaration(
       false,
       b.functionDeclaration(
-        b.identifier(options.blueprintName),
+        b.identifier(options.blueprintAction),
         [],
         b.blockStatement([])
       )
@@ -82,8 +82,8 @@ module.exports = {
         if (!containsActionAlready) {
           var actionProperty = b.property(
             'init',
-            b.identifier(options.blueprintName),
-            b.identifier(options.blueprintName)
+            b.identifier(options.blueprintAction),
+            b.identifier(options.blueprintAction)
           );
           actionProperty.shorthand = true;
           object.get('properties').push(actionProperty);
