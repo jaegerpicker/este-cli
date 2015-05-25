@@ -54,7 +54,6 @@ module.exports = {
       }
     });
 
-
     if (!setToString) {
       return Promise.reject('Couldn\'t find `setToString` method. Make sure it exists');
     }
@@ -99,7 +98,7 @@ module.exports = {
 
       // Compare identifiers with a new name to ensure it's unique
       visitIdentifier: function(identifier) {
-        if (identifier.get('name').value === options.blueprintName) {
+        if (identifier.get('name').value === options.blueprintAction) {
           containsActionAlready = true;
           this.abort();
         }
