@@ -36,8 +36,15 @@ module.exports = {
 
     // Assume setToString does not exist yet
     var setToString = null;
+    var dispatch = null;
 
-    recast.visit(data.program.body, {
+    recast.visit(data, {
+
+      // Get dispatch reference
+      visitProgram: function(program) {
+        dispatch = program.scope.getBindings().dispatch;
+        this.traverse(program);
+      },
 
       // Traverse every expression statement
       visitExpressionStatement: function(statement) {
@@ -58,13 +65,22 @@ module.exports = {
       return Promise.reject('Couldn\'t find `setToString` method. Make sure it exists');
     }
 
-    // Add new export action just before setToString
+    if (!dispatch) {
+      return Promise.reject('Dispatch method is missing in your file');
+    }
+
     var node = b.exportDeclaration(
       false,
       b.functionDeclaration(
         b.identifier(options.blueprintAction),
         [],
-        b.blockStatement([])
+        b.blockStatement([
+          b.expressionStatement(
+            b.callExpression(b.identifier('dispatch'), [
+              b.identifier(options.blueprintAction)
+            ])
+          )
+        ])
       )
     );
 
