@@ -60,10 +60,12 @@ This generator won't add a store switch with newly created action although this 
 ### Component
 
 ```bash
-$ este-cli component <name>
+$ este-cli component <name> -p
 ```
 
-Creates top-level reusable component in `src/client/components/<name>.react.js` that exports a function which wrapps `BaseComponent` passed.
+Creates top-level reusable component in `src/client/components/<name>.react.js` that exports a function which wraps `BaseComponent` passed.
+
+If you want to create a pure component that does not wrap any other one, pass `-p` flag.
 
 **NOTE**:
 This generator always adds a component that wraps another one. Support for plain components is on the way.
