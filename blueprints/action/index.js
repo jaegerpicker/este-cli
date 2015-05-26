@@ -28,7 +28,7 @@ module.exports = {
 
   afterInstall: function(options) {
 
-    // Generator was run with 3 arguments instead of 3, skip afterInstall
+    // No action specified, skip adding it
     if (!options.blueprintAction) return;
 
     var actionPath = path.join(options.rootFolder, options.blueprintName, 'actions.js');
