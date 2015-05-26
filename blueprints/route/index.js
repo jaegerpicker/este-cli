@@ -52,6 +52,7 @@ module.exports = {
       visitImportDeclaration: function(imports) {
         if (imports.get('source').value.value === importPath) {
           pageImport = imports;
+          this.abort();
         }
         return false;
       }
@@ -81,10 +82,25 @@ module.exports = {
     // Get class name from import to refer in a route
     var className = specifiers[0].id.name;
 
+    // Check if route is already defined
+    var alreadyHasRoute = false;
+
+    recast.visit(topMostRoute, {
+
+      // Check all {} expression in JSX to find {className}
+      visitJSXExpressionContainer: function(expression) {
+        if (expression.get('expression').value.name === className) {
+          alreadyHasRoute = true;
+          this.abort();
+        }
+        return false;
+      }
+
+    });
+
     // Create page node
     // @TODO support nested elements
     // @TODO support specifying path
-    // @TODO check for duplicates
     var node = b.jsxElement(
       b.jsxOpeningElement(
         b.jsxIdentifier('Route'),
@@ -104,9 +120,9 @@ module.exports = {
       )
     );
 
-    topMostRoute.get('children').push(node);
-
-    console.log(topMostRoute);
+    if (!alreadyHasRoute) {
+      topMostRoute.get('children').push(node);
+    }
 
     return new Promise.fromNode(function(callback) {
       var modifiedElement = recast.print(data).code;

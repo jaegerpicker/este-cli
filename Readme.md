@@ -44,7 +44,7 @@ Wrapper running `store`, `action` and `page` generators concurrently. Useful for
 $ este-cli page <name>
 ```
 
-Creates a new page component in `src/client/pages/<name>.react.js`
+Creates a new page component in `src/client/pages/<name>.react.js`. Updates `src/client/routes.js` accordingly.
 
 ### Store
 

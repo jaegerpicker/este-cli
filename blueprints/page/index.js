@@ -7,6 +7,7 @@
 
 var paramName = require('param-case');
 var camelCase = require('camel-case');
+var Blueprint = require('../../lib/models/blueprint');
 
 module.exports = {
   description: 'Generates new page',
@@ -14,5 +15,8 @@ module.exports = {
     return {
       cssName: paramName(options.blueprintName)
     }
+  },
+  afterInstall: function(options) {
+    return Blueprint.load('route').install(options);
   }
 };
