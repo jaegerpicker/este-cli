@@ -12,6 +12,7 @@ var b = recast.types.builders;
 var Promise = require('bluebird');
 var path = require('path');
 var fs = require('fs');
+var _ = require('lodash');
 
 module.exports = {
 
