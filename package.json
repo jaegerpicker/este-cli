@@ -1,7 +1,7 @@
 {
   "name": "este-cli",
   "description": "A command line interface tool that seeks to automate some tasks when working on a Este.js project.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "keywords": [
     "react",
     "cli",
