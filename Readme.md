@@ -22,11 +22,10 @@ $ npm install -g este-cli
 ### Create application
 
 ```shell
-este-cli new [name] [location]
+este-cli new <name> [location] --keep-git|-k
 ```
 
-This command creates completely fresh `Este` project by cloning it from Github repository to a location provided (defaults to current working directory). Installs all dependencies and reinits git repository so it no longer points to Este.js.
-
+This command creates completely fresh `Este` project by cloning it from Github repository to a location provided (defaults to `name` passed). When flag `-k` is passed, Este.js git repository is kept, a new instance is generated otherwise.
 ## Available generators
 
 ### Page
