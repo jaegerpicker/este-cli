@@ -53,6 +53,7 @@ module.exports = {
               b.identifier(blueprintName),
               b.objectExpression([])
             );
+            stateProperty.comments = [b.line(' State for ' + blueprintName)];
             object.get('properties').push(stateProperty);
           }
         }

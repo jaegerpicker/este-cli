@@ -44,7 +44,7 @@ Creates a new page component in `src/client/pages/<name>.react.js`
 $ este-cli store <name>
 ```
 
-Creates a new store in `src/client/<name>/store.js`. Runs `action`, `state` and `cursor` generators to ensure they are correctly imported in store.
+Creates a new store in `src/client/<name>/store.js`. Runs `state` and `cursor` generators to ensure they are correctly imported in store.
 
 ### Action
 
