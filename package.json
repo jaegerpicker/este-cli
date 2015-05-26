@@ -1,10 +1,31 @@
 {
   "name": "este-cli",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "author": "Mike Grabowski <grabbou@gmail.com>",
+  "description": "A command line interface tool that seeks to automate some tasks when working on a Este.js project.",
+  "version": "0.0.1",
+  "keywords": [
+    "react",
+    "cli",
+    "este",
+    "yeoman",
+    "generator"
+  ],
+  "main": "lib/cli.js",
+  "bin": {
+    "este-cli": "./bin/cli"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grabbou/este-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/grabbou/este-cli/issues"
+  },
+  "author": {
+    "name": "Mike Grabowski",
+    "email": "grabbou@gmail.com",
+    "url": "https://github.com/grabbou"
+  },
   "dependencies": {
     "bluebird": "^2.9.25",
     "camel-case": "^1.1.2",
@@ -27,7 +48,8 @@
     "require-directory": "^2.1.0",
     "rimraf": "^2.3.4"
   },
-  "bin": {
-    "este-cli": "./bin/cli"
-  }
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "preferGlobal": true
 }
