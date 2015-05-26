@@ -30,6 +30,14 @@ este-cli new <name> [location] --keep-git|-k
 This command creates completely fresh `Este` project by cloning it from Github repository to a location provided (defaults to `name` passed). When flag `-k` is passed, Este.js git repository is kept, a new instance is generated otherwise.
 ## Available generators
 
+### Feature
+
+```bash
+$ este-cli feature <name>
+```
+
+Wrapper running `store`, `action` and `page` generators concurrently. Useful for quick feature scaffolding.
+
 ### Page
 
 ```bash
