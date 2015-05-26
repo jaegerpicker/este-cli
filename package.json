@@ -46,7 +46,8 @@
     "path-case": "^1.1.1",
     "recast": "^0.10.12",
     "require-directory": "^2.1.0",
-    "rimraf": "^2.3.4"
+    "rimraf": "^2.3.4",
+    "update-notifier": "^0.5.0"
   },
   "engines": {
     "node": ">=0.10.0"
