@@ -1,5 +1,4 @@
-# este-cli
-[![Join the chat at https://gitter.im/steida/este](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/steida/este) [![Dependency Status](https://david-dm.org/grabbou/este-cli.svg)](https://david-dm.org/grabbou/este-cli) [![Inline docs](http://inch-ci.org/github/grabbou/este-cli.svg?branch=master)](http://inch-ci.org/github/grabbou/este-cli)
+este-cli [![Join the chat at https://gitter.im/steida/este](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/steida/este) [![Dependency Status](https://david-dm.org/grabbou/este-cli.svg)](https://david-dm.org/grabbou/este-cli) [![Inline docs](http://inch-ci.org/github/grabbou/este-cli.svg?branch=master)](http://inch-ci.org/github/grabbou/este-cli)
 ==========
 
 A command line interface tool that seeks to automate some tasks when working on a React.js project.
