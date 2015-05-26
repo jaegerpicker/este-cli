@@ -75,9 +75,6 @@ Creates top-level reusable component in `src/client/components/<name>.react.js` 
 
 If you want to create a pure component that does not wrap any other one, pass `-p` flag.
 
-**NOTE**:
-This generator always adds a component that wraps another one. Support for plain components is on the way.
-
 ### Cursor
 
 ```bash
