@@ -62,8 +62,7 @@ $ este-cli action <name> [actionName]`
 
 Creates simple `[actionName]` action in `src/client/<name>/actions.js` and exports it. If `[actionName]` is nested, it will be converted to camelCase. If `actions.js` file is missing, it will be created. If `[actionName]` is not provided, only `actions.js` file is created.
 
-**Note**:
-This generator won't add a store switch with newly created action although this feature is planned.
+Action switch will be added to a store automatically. If store file does not exist, it will be created. If store file does not import actions, it will be imported. Generator understands both `* as actions` and `{action1, action2}` imports and is able to handle them all properly. 
 
 ### Component
 

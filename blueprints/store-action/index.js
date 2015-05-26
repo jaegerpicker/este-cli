@@ -19,12 +19,6 @@ module.exports = {
 
   description: 'Generates new store switch for action',
 
-  args: [{
-    type: String,
-    name: 'action',
-    property: 'blueprintAction'
-  }],
-
   // Ensure store is there
   beforeInstall: function(options) {
 
@@ -102,9 +96,7 @@ module.exports = {
       specifiers = actionImport.specifiers;
 
     } else {
-
       specifiers = actionImport.get('specifiers').value;
-
     }
 
     // If not import * from actions,
@@ -165,7 +157,26 @@ module.exports = {
 
       visitSwitchStatement: function(switchExpr) {
         switchStatement = switchExpr;
-        this.traverse(switchExpr);
+        this.traverse(switchStatement);
+      },
+
+      visitSwitchCase: function(switchCase) {
+        var test = switchCase.get('test').value;
+        if (n.Identifier.check(test) && test.name === actionName) {
+          alreadyHasSwitch = true;
+          this.abort();
+        }
+        return false;
+      },
+
+      visitMemberExpression: function(memberExpression) {
+        var object = memberExpression.get('object').value.name;
+        var prop = memberExpression.get('property').value.name;
+        if ((object + '.' + prop) === actionCaseIdentifier) {
+          alreadyHasSwitch = true;
+          this.abort();
+        }
+        return false;
       }
 
     });

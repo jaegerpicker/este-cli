@@ -5,9 +5,11 @@
 
 'use strict';
 
+var Blueprint = require('../../lib/models/blueprint');
 var Promise = require('bluebird');
 var recast = require('recast');
 var b = recast.types.builders;
+var camelCase = require('camel-case');
 var path = require('path');
 var fs = require('fs');
 var _ = require('lodash');
@@ -31,12 +33,15 @@ module.exports = {
     // No action specified, skip adding it
     if (!options.blueprintAction) return;
 
+    var blueprintAction = camelCase(options.blueprintAction);
+
     var actionPath = path.join(options.rootFolder, options.blueprintName, 'actions.js');
     var data = recast.parse(fs.readFileSync(actionPath).toString());
 
     // Assume setToString does not exist yet
     var setToString = null;
     var dispatch = null;
+    var exportsActionAlready = false;
 
     recast.visit(data, {
 
@@ -44,6 +49,13 @@ module.exports = {
       visitProgram: function(program) {
         dispatch = program.scope.getBindings().dispatch;
         this.traverse(program);
+      },
+
+      visitFunctionDeclaration: function(declaration) {
+        if (declaration.get('id').value.name === blueprintAction) {
+          exportsActionAlready = true;
+        }
+        return false;
       },
 
       // Traverse every expression statement
@@ -55,7 +67,6 @@ module.exports = {
       visitCallExpression: function(call) {
         if (call.get('callee').value.name === 'setToString') {
           setToString = call.parent;
-          this.abort();
         }
         return false;
       }
@@ -72,19 +83,21 @@ module.exports = {
     var node = b.exportDeclaration(
       false,
       b.functionDeclaration(
-        b.identifier(options.blueprintAction),
+        b.identifier(blueprintAction),
         [],
         b.blockStatement([
           b.expressionStatement(
             b.callExpression(b.identifier('dispatch'), [
-              b.identifier(options.blueprintAction)
+              b.identifier(blueprintAction)
             ])
           )
         ])
       )
     );
 
-    setToString.insertBefore(node);
+    if (!exportsActionAlready) {
+      setToString.insertBefore(node);
+    }
 
     // Check if action is already defined in setToString
     var containsActionAlready = false;
@@ -99,8 +112,8 @@ module.exports = {
         if (!containsActionAlready) {
           var actionProperty = b.property(
             'init',
-            b.identifier(options.blueprintAction),
-            b.identifier(options.blueprintAction)
+            b.identifier(blueprintAction),
+            b.identifier(blueprintAction)
           );
           actionProperty.shorthand = true;
           object.get('properties').push(actionProperty);
@@ -114,7 +127,7 @@ module.exports = {
 
       // Compare identifiers with a new name to ensure it's unique
       visitIdentifier: function(identifier) {
-        if (identifier.get('name').value === options.blueprintAction) {
+        if (identifier.get('name').value === blueprintAction) {
           containsActionAlready = true;
           this.abort();
         }
@@ -125,6 +138,8 @@ module.exports = {
     return new Promise.fromNode(function(callback) {
       var modifiedElement = recast.print(data).code;
       fs.writeFile(actionPath, modifiedElement, callback);
-    });
+    }).then(function() {
+        return Blueprint.load('store-action').install(options);
+      })
   }
 };
