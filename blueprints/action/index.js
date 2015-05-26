@@ -14,6 +14,8 @@ var _ = require('lodash');
 
 module.exports = {
 
+  alias: 'ga',
+
   // This blueprint only ensures actions file exists, so skip by default
   skipExistingFiles: true,
 

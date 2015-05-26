@@ -10,6 +10,8 @@ var Blueprint = require('../../lib/models/blueprint');
 
 module.exports = {
 
+  alias: 'gs',
+
   description: 'Generates new store',
 
   // Create __name__/actions.js and update state/cursor with appropriate elements

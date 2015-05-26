@@ -15,6 +15,10 @@ var fs = require('fs');
 
 module.exports = {
 
+  alias: 'gst',
+
+  description: 'Generates new state',
+
   skipExistingFiles: true,
 
   afterInstall: function(options) {

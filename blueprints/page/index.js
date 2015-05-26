@@ -9,6 +9,7 @@ var paramName = require('param-case');
 var camelCase = require('camel-case');
 
 module.exports = {
+  alias: 'gp',
   description: 'Generates new page',
   locals: function(file, options) {
     return {
