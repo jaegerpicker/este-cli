@@ -87,7 +87,7 @@ Creates a `[name]` state in `src/server/initialstate.js`. If the file is missing
 
 The MIT License (MIT)
 
-Copyright (c) 2015 Made by Form
+Copyright (c) 2015 Mike Grabowski
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
