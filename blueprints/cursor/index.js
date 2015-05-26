@@ -14,8 +14,6 @@ var fs = require('fs');
 
 module.exports = {
 
-  alias: 'gcu',
-
   description: 'Generates new cursor',
 
   skipExistingFiles: true,

@@ -8,6 +8,5 @@
 var camelCase = require('camel-case');
 
 module.exports = {
-  description: 'Generates new component',
-  alias: 'gc'
+  description: 'Generates new component'
 };

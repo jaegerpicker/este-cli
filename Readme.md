@@ -33,7 +33,7 @@ This command creates completely fresh `Este` project by cloning it from Github r
 ### Page
 
 ```bash
-$ este-cli generate-page|gp <name>
+$ este-cli page <name>
 ```
 
 Creates a new page component in `src/client/pages/<name>.react.js`
@@ -41,7 +41,7 @@ Creates a new page component in `src/client/pages/<name>.react.js`
 ### Store
 
 ```bash
-$ este-cli generate-store|gs <name>
+$ este-cli store <name>
 ```
 
 Creates a new store in `src/client/<name>/store.js`. Runs `action`, `state` and `cursor` generators to ensure they are correctly imported in store.
@@ -49,7 +49,7 @@ Creates a new store in `src/client/<name>/store.js`. Runs `action`, `state` and 
 ### Action
 
 ```bash
-$ este-cli generate-action|ga <name> [actionName]`
+$ este-cli action <name> [actionName]`
 ```
 
 Creates simple `[actionName]` action in `src/client/<name>/actions.js` and exports it. If `[actionName]` is nested, it will be converted to camelCase. If `actions.js` file is missing, it will be created. If `[actionName]` is not provided, only `actions.js` file is created.
@@ -60,7 +60,7 @@ This generator won't add a store switch with newly created action although this 
 ### Component
 
 ```bash
-$ este-cli generate-component|gc <name>
+$ este-cli component <name>
 ```
 
 Creates top-level reusable component in `src/client/components/<name>.react.js` that exports a function which wrapps `BaseComponent` passed.
@@ -71,7 +71,7 @@ This generator always adds a component that wraps another one. Support for plain
 ### Cursor
 
 ```bash
-$ este-cli generate-cursor|gcu <name>
+$ este-cli cursor <name>
 ```
 
 Creates a `<name>` cursor pointing to `<name>` state. IF file is missing, it will be created.
@@ -79,7 +79,7 @@ Creates a `<name>` cursor pointing to `<name>` state. IF file is missing, it wil
 ### State
 
 ```bash
-$ este-cli generate-state|gst <name>
+$ este-cli state <name>
 ```
 
 Creates a `<name>` state in `src/server/initialstate.js`. If the file is missing, it will be created.
