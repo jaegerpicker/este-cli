@@ -9,8 +9,6 @@ var Blueprint = require('../lib/models/blueprint');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 
-process.chdir(__dirname);
-
 describe('Blueprint#_locals', function() {
 
   var blueprint = Blueprint.load('page');
