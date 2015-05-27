@@ -11,9 +11,9 @@ var expect = require('chai').expect;
 describe('Blueprint#getFlags', function() {
 
   var blueprint = Blueprint.load('page');
-  var flags = {
+  var flags = [{
     flag1: 'flag1'
-  };
+  }];
 
   it('should return no flags by default', function() {
     var blueprintFlags = blueprint.getFlags();
