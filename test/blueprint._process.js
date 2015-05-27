@@ -10,15 +10,12 @@ var Promise = require('bluebird');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 
-describe('Blueprint', function() {
+describe('Blueprint#_process', function() {
 
-  var blueprint = Blueprint.load('page');
-  var options = {};
+    var blueprint = Blueprint.load('page');
+    var options = {};
 
-  var noop = function() {
-  };
-
-  describe('_process', function() {
+    var noop = function() {};
 
     it('should return a promise', function() {
       expect(blueprint._process(options, noop, noop, noop)).to.be.instanceOf(Promise);
@@ -55,7 +52,5 @@ describe('Blueprint', function() {
         })
         .catch(noop);
     });
-
-  });
 
 });
