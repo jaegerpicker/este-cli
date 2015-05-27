@@ -26,12 +26,38 @@ describe('Blueprint#_locals', function() {
     blueprintName: 'nested/page'
   };
 
+  var customLocals = {
+    myLocal: 'a'
+  };
+
   describe('variables', function() {
 
     it('should return all locals', function() {
       var locals = blueprint._locals(file, options);
       expect(locals.className).to.equal('NestedPage');
       expect(locals.camelName).to.equal('nestedPage');
+      expect(locals.rootPath).to.be.defined;
+      expect(locals.folderPath).to.be.defined;
+    });
+
+    it('should call locals with file and options', function() {
+      blueprint.locals = sinon.spy();
+      blueprint._locals(file, options);
+      expect(blueprint.locals.calledWith(file, options)).to.be.true;
+    });
+
+    it('should merge locals from function', function() {
+      blueprint.locals = function() {
+        return customLocals;
+      };
+      var locals = blueprint._locals(file, options);
+      expect(locals).to.have.property('myLocal');
+    });
+
+    it('should merge mapFileTokens when object', function() {
+      blueprint.locals = customLocals;
+      var locals = blueprint._locals(file, options);
+      expect(locals).to.have.property('myLocal');
     });
 
   });
