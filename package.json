@@ -13,6 +13,10 @@
   "bin": {
     "este-cli": "./bin/cli"
   },
+  "scripts": {
+    "test": "mocha --reporter spec --bail --check-leaks test/",
+    "test-ci": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -47,10 +51,16 @@
     "recast": "^0.10.12",
     "require-directory": "^2.1.0",
     "rimraf": "^2.3.4",
+    "sinon": "^1.14.1",
     "update-notifier": "^0.5.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
-  "preferGlobal": true
+  "preferGlobal": true,
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "istanbul": "^0.3.14",
+    "mocha": "^2.2.5"
+  }
 }
