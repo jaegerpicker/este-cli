@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "mocha --globals opts --reporter spec --bail --check-leaks test/ test/**/*.js",
-    "test-ci": "istanbul cover ./node_modules/mocha/bin/_mocha --globals opts --report lcovonly -- -R spec test/**/*.js  && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "test-ci": "istanbul cover ./node_modules/mocha/bin/_mocha --globals opts --report lcovonly -- -R spec test/**/*.js  && ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info && rm -rf ./coverage"
   },
   "license": "MIT",
   "repository": {
