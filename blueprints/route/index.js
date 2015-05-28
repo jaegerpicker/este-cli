@@ -121,7 +121,7 @@ module.exports = {
     );
 
     if (!alreadyHasRoute) {
-      topMostRoute.get('children').push(node);
+      topMostRoute.get('children').push(node, '\n');
     }
 
     return new Promise.fromNode(function(callback) {
