@@ -80,7 +80,7 @@ If you want to create a pure component that does not wrap any other one, pass `-
 $ este-cli component <featureName> <name>
 ```
 
-Creates feature component in `src/client/<featureName>/<name>.react.js and exports it.
+Creates feature component in `src/client/featureName/<name>.react.js and exports it.
 
 ### Cursor
 
