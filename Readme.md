@@ -74,6 +74,14 @@ Creates top-level reusable component in `src/client/components/<name>.react.js` 
 
 If you want to create a pure component that does not wrap any other one, pass `-p` flag.
 
+### Element
+
+```bash
+$ este-cli component <featureName> <name>
+```
+
+Creates feature component in `src/client/<featureName>/<name>.react.js and exports it.
+
 ### Cursor
 
 ```bash
