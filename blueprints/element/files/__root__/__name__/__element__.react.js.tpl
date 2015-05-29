@@ -1,4 +1,4 @@
-import Component from '{{{folderPath}}}/component.react';
+import Component from '{{{rootPath}}}/component/component.react';
 import React from 'react';
 
 export default class {{className}} extends Component {
