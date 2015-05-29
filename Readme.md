@@ -77,7 +77,7 @@ If you want to create a pure component that does not wrap any other one, pass `-
 ### Element
 
 ```bash
-$ este-cli component <featureName> <name>
+$ este-cli element <featureName> <name>
 ```
 
 Creates feature component in `src/client/<featureName>/<name>.react.js` and exports it.
