@@ -1,3 +1,9 @@
+## 0.4.1 (May 29, 2015)
+
+#### Bug Fixes
+
+* Fixed wrong relative path to component when creating a new element
+
 ## 0.4 (May 29, 2015)
 
 #### New Features
