@@ -7,6 +7,12 @@
 
 module.exports = {
 
-  description: 'Generates new translation'
+  skipExistingFiles: true,
+
+  description: 'Generates new translation',
+
+  afterInstall: function(options) {
+    
+  }
 
 };
