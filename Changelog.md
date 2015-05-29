@@ -3,6 +3,7 @@
 #### New Features
 
 * Added `-v` flag to `new` command to see detailed output of underlying process (including `npm install`)
+* `new` command now shows a fancy spinner
 * Added new `element` generator to generate feature components, e.g. `todos/list.react.js`
 * When writing new generator, you can now either export a function or an object in `locals` and `mapFileTokens`
 * Generator will now warn you when trying to work on a non-este directory
