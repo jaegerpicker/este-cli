@@ -49,21 +49,13 @@ module.exports = {
     }
 
     if (!file.getFunctionDeclaration(blueprintAction)) {
-      var node = b.exportDeclaration(
-        false,
-        b.functionDeclaration(
-          b.identifier(blueprintAction),
-          [],
-          b.blockStatement([
-            b.expressionStatement(
-              b.callExpression(b.identifier('dispatch'), [
-                b.identifier(blueprintAction)
-              ])
-            )
-          ])
-        )
-      );
-      setToString.insertBefore(node);
+      var functionDeclaration = [
+        '',
+        'export function ' + blueprintAction + '() {',
+        '  dispatch(' + blueprintAction + ');',
+        '}'
+      ];
+      file.prependCode(setToString, functionDeclaration.join('\n'));
     }
 
     var definedStrings = file.getObjectExpression(setToString);
