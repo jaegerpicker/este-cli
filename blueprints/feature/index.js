@@ -16,7 +16,8 @@ module.exports = {
     return Promise.all([
       Blueprint.load('store').install(options),
       Blueprint.load('action').install(options),
-      Blueprint.load('page').install(options)
+      Blueprint.load('page').install(options),
+      Blueprint.load('translation').install(options)
     ]);
   }
 
