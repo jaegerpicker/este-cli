@@ -36,7 +36,7 @@ This command creates completely fresh `Este` project by cloning it from Github r
 $ este-cli feature <name>
 ```
 
-Wrapper running `store`, `action` and `page` generators concurrently. Useful for quick feature scaffolding.
+Wrapper running `store`, `action`, `page` and `translate` generators concurrently. Useful for quick feature scaffolding.
 
 ### Page
 
@@ -97,6 +97,14 @@ $ este-cli state <name>
 ```
 
 Creates a `<name>` state in `src/server/initialstate.js`. If the file is missing, it will be created.
+
+### Translate
+
+```bash
+$ este-cli translate <name>
+```
+
+Creates a `<name>` property with empty object in `src/client/messages.js`. If the file is missing, it will be created.
 
 ## License
 
