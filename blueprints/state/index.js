@@ -6,10 +6,8 @@
 'use strict';
 
 var camelCase = require('camel-case');
-var recast = require('recast');
-var n = recast.types.namedTypes;
-var b = recast.types.builders;
 var Promise = require('bluebird');
+var File = require('../../lib/models/file');
 var path = require('path');
 var fs = require('fs');
 
@@ -21,63 +19,23 @@ module.exports = {
 
   afterInstall: function(options) {
     var statePath = path.join(options.serverFolder, 'initialstate.js');
-    var data = recast.parse(fs.readFileSync(statePath).toString());
-    var blueprintName = camelCase(options.blueprintName);
+    var stateName = camelCase(options.blueprintName);
 
-    var states = null;
+    var file = File.load(statePath);
 
     // Get states by assuming they are exported from initialstate.js file
-    recast.visit(data.program.body, {
-      visitExportDeclaration: function(data) {
-        states = data;
-        return false;
-      }
-    });
+    var states = file.getObjectExpression();
 
     if (!states) {
       return Promise.reject('No export declaration in initialstate.js. Please check your file');
     }
 
-    var containsStateAlready = false;
-
-    recast.visit(states, {
-
-      // Traverse only top-level expression statement
-      visitObjectExpression: function(object) {
-        if(n.ExportDeclaration.check(object.parent.node)) {
-          this.traverse(object);
-
-          if (!containsStateAlready) {
-            var stateProperty = b.property(
-              'init',
-              b.identifier(blueprintName),
-              b.objectExpression([])
-            );
-            stateProperty.comments = [b.line(' State for ' + blueprintName)];
-            object.get('properties').push(stateProperty);
-          }
-        }
-        return false;
-      },
-
-      // Go deeper on every property to get identifier
-      visitProperty: function(property) {
-        this.traverse(property);
-      },
-
-      // Compare identifiers with a new name to ensure it's unique
-      visitIdentifier: function(identifier) {
-        if (identifier.get('name').value === blueprintName) {
-          containsStateAlready = true;
-          this.abort();
-        }
-        return false;
-      }
-    });
+    if (!states.hasProperty(stateName)) {
+      states.addProperty(stateName);
+    }
 
     return new Promise.fromNode(function(callback) {
-      var modifiedElement = recast.print(data).code;
-      fs.writeFile(statePath, modifiedElement, callback);
+      fs.writeFile(statePath, file.print(), callback);
     });
 
   }
