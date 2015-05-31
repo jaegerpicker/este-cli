@@ -34,7 +34,7 @@ module.exports = {
     var translateProperty = messages.getProperty(messageProperty);
 
     if (!translateProperty) {
-      messages.addProperty(messageProperty);
+      translateProperty = messages.addProperty(messageProperty);
     }
 
     // Parse optional translation keys
@@ -48,7 +48,7 @@ module.exports = {
 
       translations.forEach(function(trans) {
         if (!innerMessages.hasProperty(trans)) {
-          innerMessages.addProperty(trans, trans);
+          innerMessages.addProperty(trans, false, trans);
         }
       });
     }
