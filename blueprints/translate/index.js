@@ -15,6 +15,12 @@ module.exports = {
 
   skipExistingFiles: true,
 
+  args: [{
+    type: String,
+    name: 'translations',
+    property: 'blueprintTranslations'
+  }],
+
   description: 'Generates new translation',
 
   afterInstall: function(options) {
@@ -25,8 +31,26 @@ module.exports = {
 
     var messages = file.getObjectExpression();
 
-    if (!messages.hasProperty(messageProperty)) {
+    var translateProperty = messages.getProperty(messageProperty);
+
+    if (!translateProperty) {
       messages.addProperty(messageProperty);
+    }
+
+    // Parse optional translation keys
+    if (options.blueprintTranslations) {
+      var translations = options.blueprintTranslations.split(',');
+      var innerMessages = file.getObjectExpression(translateProperty);
+
+      if (!innerMessages) {
+        return Promise.reject(messageProperty + ' is a string, cannot add nested translations');
+      }
+
+      translations.forEach(function(trans) {
+        if (!innerMessages.hasProperty(trans)) {
+          innerMessages.addProperty(trans, trans);
+        }
+      });
     }
 
     return new Promise.fromNode(function(callback) {

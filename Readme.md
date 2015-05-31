@@ -101,10 +101,16 @@ Creates a `<name>` state in `src/server/initialstate.js`. If the file is missing
 ### Translate
 
 ```bash
-$ este-cli translate <name>
+$ este-cli translate <name> [translations..]
 ```
 
 Creates a `<name>` property with empty object in `src/client/messages.js`. If the file is missing, it will be created.
+
+When comma separated sub-elements are provided as `[translations...]` (`este-cli translate todos name,description,title`), 
+nested properties will be created.
+
+If `<name>` is already a string, generator will warn you that adding properties to a string is forbidden. In such a case,
+you should change your translations file before continuing.
 
 ## License
 
