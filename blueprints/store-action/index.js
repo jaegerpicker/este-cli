@@ -60,64 +60,18 @@ module.exports = {
       actionImport.importVariable(actionName);
     }
 
-    //
-    //// ActionCase identifier,
-    //// defaults to actionName
-    //var actionCaseIdentifier = actionName;
-    //
-    //// If imported with * as x, get x and use for actionCaseIdentifier
-    //if (n.ImportNamespaceSpecifier.check(specifiers[0])) {
-    //  actionCaseIdentifier = specifiers[0].id.name + '.' + actionName;
-    //}
-    //
-    //// Create action case
-    //var actionCase = b.switchCase(
-    //  b.identifier(actionCaseIdentifier),
-    //  [
-    //    b.breakStatement()
-    //  ]
-    //);
-    //actionCase.comments = [b.line(' Put your action specific logic here')];
-    //
-    //// Find switch statement
-    //var switchStatement = null;
-    //var alreadyHasSwitch = false;
-    //
-    //recast.visit(dispatchToken, {
-    //
-    //  visitSwitchStatement: function(switchExpr) {
-    //    switchStatement = switchExpr;
-    //    this.traverse(switchStatement);
-    //  },
-    //
-    //  visitSwitchCase: function(switchCase) {
-    //    var test = switchCase.get('test').value;
-    //    if (n.Identifier.check(test) && test.name === actionName) {
-    //      alreadyHasSwitch = true;
-    //      this.abort();
-    //    }
-    //    return false;
-    //  },
-    //
-    //  visitMemberExpression: function(memberExpression) {
-    //    var object = memberExpression.get('object').value.name;
-    //    var prop = memberExpression.get('property').value.name;
-    //    if ((object + '.' + prop) === actionCaseIdentifier) {
-    //      alreadyHasSwitch = true;
-    //      this.abort();
-    //    }
-    //    return false;
-    //  }
-    //
-    //});
-    //
-    //if (!switchStatement) {
-    //  return Promise.reject('No switch statement present in your app. Please check your store file');
-    //}
-    //
-    //if (!alreadyHasSwitch) {
-    //  switchStatement.get('cases').unshift(actionCase);
-    //}
+    var switchStatement = file.getSwitchStatement(dispatchToken);
+
+    // @TODO create one if missing
+    if (!switchStatement) {
+      return Promise.reject('No switch statement present in your app. Please check your store file');
+    }
+
+    var actionIdentifier = actionImport.getVariableIdentifier(actionName);
+
+    if (!switchStatement.hasSwitchCase(actionIdentifier)) {
+      switchStatement.addSwitchCase(actionIdentifier);
+    }
 
     return new Promise.fromNode(function(callback) {
       var modifiedElement = recast.print(file.ast).code;
