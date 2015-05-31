@@ -41,7 +41,7 @@ module.exports = {
 
     // Load store file
     var storePath = path.join(options.rootFolder, options.blueprintName, 'store.js');
-    var file = new File(fs.readFileSync(storePath));
+    var file = File.load(storePath);
 
     // Find dispatchToken export declaration
     // Check if actions are imported
@@ -74,8 +74,7 @@ module.exports = {
     }
 
     return new Promise.fromNode(function(callback) {
-      var modifiedElement = recast.print(file.ast).code;
-      fs.writeFile(storePath, modifiedElement, callback);
+      fs.writeFile(storePath, file.print(), callback);
     });
 
   }
