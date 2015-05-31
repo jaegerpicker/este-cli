@@ -8,12 +8,9 @@
 var Blueprint = require('../../lib/models/blueprint');
 var File = require('../../lib/models/file');
 var Promise = require('bluebird');
-var recast = require('recast');
-var b = recast.types.builders;
 var camelCase = require('camel-case');
 var path = require('path');
 var fs = require('fs');
-var _ = require('lodash');
 
 module.exports = {
 
