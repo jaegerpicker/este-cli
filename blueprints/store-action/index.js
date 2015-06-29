@@ -9,7 +9,7 @@ var Promise = require('bluebird');
 var Blueprint = require('../../lib/models/blueprint');
 var path = require('path');
 var camelCase = require('camel-case');
-var File = require('../../lib/models/File');
+var File = require('../../lib/models/file');
 var fs = require('fs');
 var _ = require('lodash');
 
