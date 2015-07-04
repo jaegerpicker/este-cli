@@ -7,7 +7,7 @@
 
 var camelCase = require('camel-case');
 var recast = require('recast');
-var File = require('../../lib/models/File');
+var File = require('../../lib/models/file');
 var Promise = require('bluebird');
 var path = require('path');
 var fs = require('fs');
@@ -24,12 +24,12 @@ module.exports = {
 
     var file = File.load(statePath);
 
-    if (!file.hasVariableInScope('state')) {
-      return Promise.reject('No state in state.js file. Please create a new instance before adding a new cursor');
+    if (!file.hasVariableInScope('appState')) {
+      return Promise.reject('No appState in state.js file. Please create a new instance before adding a new cursor');
     }
 
     if (!file.getVariable(blueprintName)) {
-      file.appendCode('export const ' + blueprintName + ' = state.cursor([\'' + blueprintName + '\'])');
+      file.appendCode('export const ' + blueprintName + ' = appState.cursor([\'' + blueprintName + '\'])');
     }
 
     return new Promise.fromNode(function(callback) {

@@ -106,7 +106,7 @@ module.exports = {
         b.jsxIdentifier('Route'),
         [
           b.jsxAttribute(
-            b.jsxIdentifier("name"),
+            b.jsxIdentifier("handler"),
             b.jsxExpressionContainer(
               b.identifier(className)
             )
