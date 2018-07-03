@@ -17,7 +17,8 @@
     "test": "mocha --globals opts --reporter spec --bail --check-leaks test/ test/**/*.js",
     "test-ci": "istanbul cover ./node_modules/mocha/bin/_mocha --globals opts --report lcovonly -- -R spec test/**/*.js  && ./node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info && rm -rf ./coverage",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "npm run snyk-protect",
+    "prepare": "npm run snyk-protect"
   },
   "license": "MIT",
   "repository": {
@@ -56,7 +57,7 @@
     "rimraf": "^2.3.4",
     "sinon": "^1.14.1",
     "update-notifier": "^0.5.0",
-    "snyk": "^1.69.10"
+    "snyk": "^1.88.0"
   },
   "engines": {
     "node": ">=0.10.0"
